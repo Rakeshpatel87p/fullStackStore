@@ -51,7 +51,8 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "graphql-tools": "^4.0.0",
     "jest": "^23.6.0",
-    "jest-transform-graphql": "^2.1.0"
+    "jest-transform-graphql": "^2.1.0",
+    "prettier": "^1.19.1"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
