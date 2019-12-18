@@ -13,9 +13,20 @@ const DELETE_ITEM_MUTATION = gql`
 class DeleteItem extends Component {
   render() {
     return (
-      <div>
-        <p>Hello there, going to delete here</p>
-      </div>
+      <Mutation
+        mutation={DELETE_ITEM_MUTATION}
+        variables={{ id: this.props.id }}>
+        {(deleteItem, { error }) => (
+          <button
+            onClick={() => {
+              if (confirm("Are you sure you want to delete this item?")) {
+                deleteItem();
+              }
+            }}>
+            {this.props.children}
+          </button>
+        )}
+      </Mutation>
     );
   }
 }
