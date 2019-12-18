@@ -1,3 +1,5 @@
+#Defining interfaces
+
 type User {
   id: ID! @unique @id
   name: String!
