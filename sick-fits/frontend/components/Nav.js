@@ -1,5 +1,7 @@
-import Link from 'next/link';
-import NavStyles from './styles/NavStyles';
+import Link from "next/link";
+import NavStyles from "./styles/NavStyles";
+import { Mutation } from "react-apollo";
+import { TOGGLE_CART_MUTATION } from "./Cart";
 
 const Nav = () => (
   <NavStyles>
@@ -18,6 +20,9 @@ const Nav = () => (
     <Link href="/me">
       <a>Account</a>
     </Link>
+    <Mutation mutation={TOGGLE_CART_MUTATION}>
+      {toggleCart => <button onClick={toggleCart}>My Cart</button>}
+    </Mutation>
   </NavStyles>
 );
 
