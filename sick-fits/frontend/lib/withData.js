@@ -14,27 +14,27 @@ function createClient({ headers }) {
         headers
       });
     },
+    // local data
     clientState: {
       resolvers: {
         Mutation: {
           toggleCart(_, variables, { cache }) {
-            //read cartOpen value from the cache
+            // read the cartOpen value from the cache
             const { cartOpen } = cache.readQuery({
               query: LOCAL_STATE_QUERY
             });
-            //Write the cart State to the opposite
+            // Write the cart State to the opposite
             const data = {
               data: { cartOpen: !cartOpen }
             };
-
             cache.writeData(data);
-            return;
+            return data;
           }
         }
+      },
+      defaults: {
+        cartOpen: true
       }
-    },
-    defaults: {
-      cartOpen: true
     }
   });
 }
