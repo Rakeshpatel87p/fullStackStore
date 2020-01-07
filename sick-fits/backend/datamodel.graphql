@@ -17,9 +17,3 @@ type Item {
   updatedAt: DateTime
   #user: [User]!
 }
-
-type CartItem {
-  id: ID! @unique @id
-  quantity: Int! @default(value: 1)
-  item: Item! # relationship to Item
-}
