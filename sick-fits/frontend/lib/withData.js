@@ -29,11 +29,26 @@ function createClient({ headers }) {
             };
             cache.writeData(data);
             return data;
+          },
+          addToCart(_, variables, { cache }) {
+            //read cartItems value from cache
+            const { cartItems } = cache.readQuery({
+              query: LOCAL_STATE_QUERY
+            });
+            //add new cart item to list
+            const data = {
+              data: { cartItems: [...cartItems, variables.id] }
+            };
+            cache.writeData({ data });
+            console.log(data.cartItems);
+            console.log(cache);
+            return data;
           }
         }
       },
       defaults: {
-        cartOpen: true
+        cartOpen: true,
+        cartItems: []
       }
     }
   });
