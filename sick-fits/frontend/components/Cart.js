@@ -9,6 +9,7 @@ import SickButton from "./styles/SickButton";
 const LOCAL_STATE_QUERY = gql`
   query {
     cartOpen @client
+    cartItems @client
   }
 `;
 
