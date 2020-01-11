@@ -2,6 +2,7 @@ import withApollo from "next-with-apollo";
 import ApolloClient from "apollo-boost";
 import { endpoint } from "../config";
 import { LOCAL_STATE_QUERY } from "../components/Cart";
+import { LOCAL_CART_ITEMS_QUERY } from "../components/AddToCart";
 
 function createClient({ headers }) {
   return new ApolloClient({
@@ -30,19 +31,28 @@ function createClient({ headers }) {
             cache.writeData(data);
             return data;
           },
-          addToCart(_, variables, { cache }) {
-            //read cartItems value from cache
+          addToCart(_, { id }, { cache }) {
             const { cartItems } = cache.readQuery({
-              query: LOCAL_STATE_QUERY
+              query: LOCAL_CART_ITEMS_QUERY
             });
-            //add new cart item to list
-            const data = {
-              data: { cartItems: [...cartItems, variables.id] }
-            };
-            cache.writeData({ data });
-            console.log(data.cartItems);
+
+            let data;
+
+            cartItems.find(item => item.id === id)
+              ? (data = {
+                  cartItems: cartItems.map(item => {
+                    let returnVal = { ...item };
+                    if (item.id === id) {
+                      returnVal.quantity = returnVal.quantity + 1;
+                    }
+                    return returnVal;
+                  })
+                })
+              : (data = { cartItems: [...cartItems, { id, quantity: 1 }] });
+
+            cache.writeQuery({ query: LOCAL_CART_ITEMS_QUERY, data });
             console.log(cache);
-            return data;
+            return data.cartItems;
           }
         }
       },
