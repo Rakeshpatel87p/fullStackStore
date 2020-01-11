@@ -10,9 +10,9 @@ const ADD_TO_CART_MUTATION = gql`
   }
 `;
 
-const TOGGLE_CART_MUTATION = gql`
-  mutation {
-    toggleCart @client
+const LOCAL_CART_ITEMS_QUERY = gql`
+  query {
+    cartItems @client
   }
 `;
 
@@ -29,3 +29,4 @@ class AddToCart extends Component {
 }
 
 export default AddToCart;
+export { LOCAL_CART_ITEMS_QUERY };

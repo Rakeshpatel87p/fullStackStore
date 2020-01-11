@@ -9,7 +9,6 @@ import SickButton from "./styles/SickButton";
 const LOCAL_STATE_QUERY = gql`
   query {
     cartOpen @client
-    cartItems @client
   }
 `;
 
@@ -45,5 +44,4 @@ const Cart = () => (
 );
 
 export default Cart;
-export { TOGGLE_CART_MUTATION };
-export { LOCAL_STATE_QUERY };
+export { TOGGLE_CART_MUTATION, LOCAL_STATE_QUERY };
