@@ -11,5 +11,8 @@
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  }
 }
