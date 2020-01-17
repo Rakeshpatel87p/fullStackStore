@@ -56,7 +56,6 @@ function createClient({ headers }) {
                 });
 
             cache.writeQuery({ query: LOCAL_CART_ITEMS_QUERY, data });
-            console.log(cache);
             return data.cartItems;
           },
           removeFromCart(_, { id }, { cache }) {
@@ -66,13 +65,12 @@ function createClient({ headers }) {
             });
             //find and remove cartItem with that id
             const updatedCartItems = cartItems.filter(item => item.id !== id);
-            console.log(updatedCartItems);
+
             const data = {
               cartItems: [...updatedCartItems]
             };
             //rewrite fresh cartItems
             cache.writeData({ query: LOCAL_CART_ITEMS_QUERY, data });
-            console.log(cartItems);
           }
         }
       },
