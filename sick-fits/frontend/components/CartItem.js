@@ -1,4 +1,5 @@
 import React from "react";
+import RemoveFromCart from "./RemoveFromCart";
 import styled from "styled-components";
 import formatMoney from "../lib/formatMoney";
 
@@ -30,6 +31,7 @@ const CartItem = props => {
       <p>{props.title}</p>
       <p>{formatMoney(props.price)}</p>
       <p>{props.quantity}</p>
+      <RemoveFromCart id={props.id} />
     </CartItemStyles>
   );
 };
