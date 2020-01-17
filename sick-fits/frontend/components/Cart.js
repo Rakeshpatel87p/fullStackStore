@@ -2,10 +2,12 @@ import React from "react";
 import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import { adopt } from "react-adopt";
+import CartItem from "./CartItem";
 import CartStyles from "./styles/CartStyles";
 import Supreme from "./styles/Supreme";
 import CloseButton from "./styles/CloseButton";
 import SickButton from "./styles/SickButton";
+import formatMoney from "../lib/formatMoney";
 
 const LOCAL_STATE_QUERY = gql`
   query {
@@ -41,7 +43,6 @@ const Cart = () => (
   <Composed>
     {({ cartOpenQuery, cartItemsQuery, toggleCartMutation }) => {
       const cartItems = cartItemsQuery.data.cartItems;
-      if (cartItems.length <= 0) return null;
       return (
         <CartStyles open={cartOpenQuery.data.cartOpen}>
           <header>
@@ -56,16 +57,20 @@ const Cart = () => (
           </header>
           <ul>
             {cartItemsQuery.data.cartItems.map(item => (
-              <li>
-                <img width="100px" src={item.image} alt={item.title} />
-                <p>{item.title}</p>
-                <p>{item.price}</p>
-                <p>{item.quantity}</p>
-              </li>
+              <CartItem {...item} />
             ))}
           </ul>
           <footer>
-            <p>$10.10</p>
+            <p>
+              {formatMoney(
+                cartItemsQuery.data.cartItems
+                  .map(item => item.price * item.quantity)
+                  .reduce(
+                    (accummulator, currentVal) => accummulator + currentVal,
+                    0
+                  )
+              )}
+            </p>
             <SickButton>Checkout</SickButton>
           </footer>
         </CartStyles>
