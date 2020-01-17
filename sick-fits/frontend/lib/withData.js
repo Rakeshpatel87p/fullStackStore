@@ -31,7 +31,7 @@ function createClient({ headers }) {
             cache.writeData(data);
             return data;
           },
-          addToCart(_, { id }, { cache }) {
+          addToCart(_, { id, title, price, image }, { cache }) {
             const { cartItems } = cache.readQuery({
               query: LOCAL_CART_ITEMS_QUERY
             });
@@ -48,7 +48,12 @@ function createClient({ headers }) {
                     return returnVal;
                   })
                 })
-              : (data = { cartItems: [...cartItems, { id, quantity: 1 }] });
+              : (data = {
+                  cartItems: [
+                    ...cartItems,
+                    { id, title, price, image, quantity: 1 }
+                  ]
+                });
 
             cache.writeQuery({ query: LOCAL_CART_ITEMS_QUERY, data });
             console.log(cache);
