@@ -28,7 +28,6 @@ class AddToCart extends Component {
   render() {
     const { id, title, price, image } = this.props;
     return (
-      //<button onClick>Add To Cart</button>
       <Mutation
         mutation={ADD_TO_CART_MUTATION}
         variables={{ id, title, price, image }}>
