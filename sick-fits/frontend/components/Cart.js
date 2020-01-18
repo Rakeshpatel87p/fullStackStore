@@ -51,7 +51,13 @@ const Cart = () => (
             </CloseButton>
             <Supreme>Your Cart</Supreme>
             <p>
-              You Have {cartItems.length} Item
+              You Have{" "}
+              {cartItems.length > 0
+                ? cartItems
+                    .map(item => item.quantity)
+                    .reduce((accum, currentVal) => accum + currentVal, 0)
+                : 0}{" "}
+              Item
               {cartItems.length > 1 ? "s" : null} in your cart.
             </p>
           </header>
