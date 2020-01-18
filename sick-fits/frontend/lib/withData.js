@@ -40,6 +40,7 @@ function createClient({ headers }) {
 
             cartItems.find(item => item.id === id)
               ? (data = {
+                  __typename: "cartItems",
                   cartItems: cartItems.map(item => {
                     let returnVal = { ...item };
                     if (item.id === id) {
@@ -51,7 +52,14 @@ function createClient({ headers }) {
               : (data = {
                   cartItems: [
                     ...cartItems,
-                    { id, title, price, image, quantity: 1 }
+                    {
+                      __typename: "cartItem",
+                      id,
+                      title,
+                      price,
+                      image,
+                      quantity: 1
+                    }
                   ]
                 });
 
@@ -67,6 +75,7 @@ function createClient({ headers }) {
             const updatedCartItems = cartItems.filter(item => item.id !== id);
 
             const data = {
+              __typename: "cartItems",
               cartItems: [...updatedCartItems]
             };
             //rewrite fresh cartItems
