@@ -6,9 +6,10 @@ import formatMoney from "../lib/formatMoney";
 const CartItemStyles = styled.li`
   padding: 1rem 0;
   border-bottom: 1px solid ${props => props.theme.lightgrey};
-  display: grid;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  grid-template-columns: auto 1fr auto;
+  position: relative;
   img {
     margin-right: 10px;
   }
@@ -30,7 +31,7 @@ const CartItem = props => {
       <img width="100px" src={props.image} alt={props.title} />
       <p>{props.title}</p>
       <p>{formatMoney(props.price)}</p>
-      <p>{props.quantity}</p>
+      <p>Quant: {props.quantity}</p>
       <RemoveFromCart id={props.id} />
     </CartItemStyles>
   );
