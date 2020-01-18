@@ -57,7 +57,7 @@ const Cart = () => (
           </header>
           <ul>
             {cartItemsQuery.data.cartItems.map(item => (
-              <CartItem {...item} />
+              <CartItem key={item.id} {...item} />
             ))}
           </ul>
           <footer>
