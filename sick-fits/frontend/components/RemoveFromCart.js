@@ -19,9 +19,7 @@ const RemoveFromCartButton = styled.button`
 
 const REMOVE_FROM_CART_MUTATION = gql`
   mutation removeFromCart($id: ID!) {
-    removeFromCart(id: $id) @client {
-      id
-    }
+    removeFromCart(id: $id) @client
   }
 `;
 
