@@ -28,10 +28,10 @@ const CartItem = props => {
     );
   return (
     <CartItemStyles>
-      <img width="100px" src={props.image} alt={props.title} />
+      {/* <img width="100px" src={props.image} alt={props.title} /> */}
       <p>{props.title}</p>
-      <p>{formatMoney(props.price)}</p>
-      <p>Quant: {props.quantity}</p>
+      {/* <p>{formatMoney(props.price)}</p>
+      <p>Quant: {props.quantity}</p> */}
       <RemoveFromCart id={props.id} />
     </CartItemStyles>
   );
