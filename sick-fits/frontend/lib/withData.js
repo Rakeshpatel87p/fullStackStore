@@ -73,13 +73,25 @@ function createClient({ headers }) {
             });
             //find and remove cartItem with that id
             const updatedCartItems = cartItems.filter(item => item.id !== id);
-
             const data = {
               __typename: "cartItems",
               cartItems: [...updatedCartItems]
             };
             //rewrite fresh cartItems
             cache.writeData({ query: LOCAL_CART_ITEMS_QUERY, data });
+          }
+        },
+        Query: {
+          //await query items to be returned
+          cartItems(_, variables, { cache }) {
+            return cache.readQuery({
+              query: LOCAL_CART_ITEMS_QUERY
+            });
+          },
+          cartOpen(_, variables, { cache }) {
+            return cache.readQuery({
+              query: LOCAL_STATE_QUERY
+            });
           }
         }
       },
