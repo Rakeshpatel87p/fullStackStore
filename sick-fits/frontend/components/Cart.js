@@ -31,7 +31,8 @@ const Composed = adopt({
   cartOpenQuery: ({ render }) => (
     <Query query={LOCAL_STATE_QUERY}>{render}</Query>
   ),
-  cartItemsQuery: ({ render }) => (
+  //how to get loading state passed
+  cartItemsQuery: ({ render, loading }) => (
     <Query query={CART_ITEMS_QUERY}>{render}</Query>
   ),
   toggleCartMutation: ({ render }) => (
@@ -43,6 +44,7 @@ const Cart = () => (
   <Composed>
     {({ cartOpenQuery, cartItemsQuery, toggleCartMutation }) => {
       const cartItems = cartItemsQuery.data.cartItems;
+      console.log(cartItems);
       return (
         <CartStyles open={cartOpenQuery.data.cartOpen}>
           <header>
@@ -53,28 +55,28 @@ const Cart = () => (
             <p>
               You Have{" "}
               {cartItems.length > 0
-                ? cartItems
-                    .map(item => item.quantity)
-                    .reduce((accum, currentVal) => accum + currentVal, 0)
+                ? cartItems.reduce(
+                    (accum, currentVal) => accum + currentVal.quantity,
+                    0
+                  )
                 : 0}{" "}
               Item
               {cartItems.length > 1 ? "s" : null} in your cart.
             </p>
           </header>
           <ul>
-            {cartItemsQuery.data.cartItems.map(item => (
-              <CartItem key={item.id} {...item} />
-            ))}
+            {cartItems.map(item => {
+              return <CartItem key={item.id} {...item} />;
+            })}
           </ul>
           <footer>
             <p>
               {formatMoney(
-                cartItemsQuery.data.cartItems
-                  .map(item => item.price * item.quantity)
-                  .reduce(
-                    (accummulator, currentVal) => accummulator + currentVal,
-                    0
-                  )
+                cartItemsQuery.data.cartItems.reduce(
+                  (accummulator, currentVal) =>
+                    accummulator + currentVal.price * currentVal.quantity,
+                  0
+                )
               )}
             </p>
             <SickButton>Checkout</SickButton>
@@ -86,4 +88,4 @@ const Cart = () => (
 );
 
 export default Cart;
-export { TOGGLE_CART_MUTATION, LOCAL_STATE_QUERY };
+export { TOGGLE_CART_MUTATION, LOCAL_STATE_QUERY, CART_ITEMS_QUERY };
