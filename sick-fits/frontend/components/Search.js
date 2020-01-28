@@ -28,17 +28,18 @@ class Search extends React.Component {
     items: [],
     loading: false
   };
-  onChangeEvent = async (e, client) => {
+  onChangeEvent = debounce(async (e, client) => {
     console.log("Input being entered");
+    this.setState({ loading: true });
     const res = await client.query({
       query: SEARCH_ITEMS_QUERY,
       variables: { searchTerm: e.target.value }
     });
     this.setState({
       items: res.data.items,
-      loading: true
+      loading: false
     });
-  };
+  }, 350);
   render() {
     return (
       <SearchStyles>
