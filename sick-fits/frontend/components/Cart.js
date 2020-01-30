@@ -3,6 +3,7 @@ import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import { adopt } from "react-adopt";
 import CartItem from "./CartItem";
+import TakeMyMoney from "./TakeMyMoney";
 import CartStyles from "./styles/CartStyles";
 import Supreme from "./styles/Supreme";
 import CloseButton from "./styles/CloseButton";
@@ -79,7 +80,9 @@ const Cart = () => (
                 )
               )}
             </p>
-            <SickButton>Checkout</SickButton>
+            <TakeMyMoney>
+              <SickButton>Checkout</SickButton>
+            </TakeMyMoney>
           </footer>
         </CartStyles>
       );
