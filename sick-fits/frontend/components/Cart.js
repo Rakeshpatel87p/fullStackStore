@@ -16,9 +16,16 @@ const LOCAL_STATE_QUERY = gql`
   }
 `;
 
-const CART_ITEMS_QUERY = gql`
+const LOCAL_CART_ITEMS_QUERY = gql`
   query {
-    cartItems @client
+    cartItems @client {
+      cartItems
+      cartItem {
+        id
+        title
+        price
+      }
+    }
   }
 `;
 
@@ -34,7 +41,7 @@ const Composed = adopt({
   ),
   //how to get loading state passed
   cartItemsQuery: ({ render, loading }) => (
-    <Query query={CART_ITEMS_QUERY}>{render}</Query>
+    <Query query={LOCAL_CART_ITEMS_QUERY}>{render}</Query>
   ),
   toggleCartMutation: ({ render }) => (
     <Mutation mutation={TOGGLE_CART_MUTATION}>{render}</Mutation>
@@ -45,7 +52,6 @@ const Cart = () => (
   <Composed>
     {({ cartOpenQuery, cartItemsQuery, toggleCartMutation }) => {
       const cartItems = cartItemsQuery.data.cartItems;
-      console.log(cartItems);
       return (
         <CartStyles open={cartOpenQuery.data.cartOpen}>
           <header>
@@ -91,4 +97,4 @@ const Cart = () => (
 );
 
 export default Cart;
-export { TOGGLE_CART_MUTATION, LOCAL_STATE_QUERY, CART_ITEMS_QUERY };
+export { TOGGLE_CART_MUTATION, LOCAL_STATE_QUERY, LOCAL_CART_ITEMS_QUERY };

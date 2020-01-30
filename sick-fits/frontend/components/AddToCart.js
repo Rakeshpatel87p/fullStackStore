@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
+import { LOCAL_CART_ITEMS_QUERY } from "./Cart";
 
 const ADD_TO_CART_MUTATION = gql`
   mutation ADD_TO_CART_MUTATION(
@@ -18,19 +19,14 @@ const ADD_TO_CART_MUTATION = gql`
   }
 `;
 
-const LOCAL_CART_ITEMS_QUERY = gql`
-  query {
-    cartItems @client
-  }
-`;
-
 class AddToCart extends Component {
   render() {
     const { id, title, price, image } = this.props;
     return (
       <Mutation
         mutation={ADD_TO_CART_MUTATION}
-        variables={{ id, title, price, image }}>
+        variables={{ id, title, price, image }}
+      >
         {addToCart => <button onClick={addToCart}>Add To Cart</button>}
       </Mutation>
     );
@@ -38,4 +34,3 @@ class AddToCart extends Component {
 }
 
 export default AddToCart;
-export { LOCAL_CART_ITEMS_QUERY };

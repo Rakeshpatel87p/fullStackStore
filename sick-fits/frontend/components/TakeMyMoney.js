@@ -2,7 +2,7 @@ import React from "react";
 import StripeCheckout from "react-stripe-checkout";
 import { Query } from "react-apollo";
 import calcTotalPrice from "../lib/calcTotalPrice";
-import { CART_ITEMS_QUERY } from "./Cart";
+import { LOCAL_CART_ITEMS_QUERY } from "./Cart";
 class TakeMyMoney extends React.Component {
   onToken = res => {
     console.log("On Token Called!");
@@ -10,7 +10,7 @@ class TakeMyMoney extends React.Component {
   };
   render() {
     return (
-      <Query query={CART_ITEMS_QUERY}>
+      <Query query={LOCAL_CART_ITEMS_QUERY}>
         {data => {
           const { cartItems } = data.data;
           return (

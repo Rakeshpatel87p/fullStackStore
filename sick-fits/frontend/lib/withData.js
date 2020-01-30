@@ -2,7 +2,7 @@ import withApollo from "next-with-apollo";
 import ApolloClient from "apollo-boost";
 import { endpoint } from "../config";
 import { LOCAL_STATE_QUERY } from "../components/Cart";
-import { LOCAL_CART_ITEMS_QUERY } from "../components/AddToCart";
+import { LOCAL_CART_ITEMS_QUERY } from "../components/Cart";
 
 function createClient({ headers }) {
   return new ApolloClient({
@@ -80,20 +80,20 @@ function createClient({ headers }) {
             //rewrite fresh cartItems
             cache.writeData({ query: LOCAL_CART_ITEMS_QUERY, data });
           }
-        },
-        Query: {
-          //await query items to be returned
-          cartItems(_, variables, { cache }) {
-            return cache.readQuery({
-              query: LOCAL_CART_ITEMS_QUERY
-            });
-          },
-          cartOpen(_, variables, { cache }) {
-            return cache.readQuery({
-              query: LOCAL_STATE_QUERY
-            });
-          }
         }
+        // Query: {
+        //   //await query items to be returned
+        //   cartItems(_, variables, { cache }) {
+        //     return cache.readQuery({
+        //       query: LOCAL_CART_ITEMS_QUERY
+        //     });
+        //   },
+        //   cartOpen(_, variables, { cache }) {
+        //     return cache.readQuery({
+        //       query: LOCAL_STATE_QUERY
+        //     });
+        //   }
+        // }
       },
       defaults: {
         cartOpen: true,

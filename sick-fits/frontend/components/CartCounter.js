@@ -1,7 +1,7 @@
 import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { CART_ITEMS_QUERY } from "./Cart";
+import { LOCAL_CART_ITEMS_QUERY } from "./Cart";
 import styled from "styled-components";
 
 const CartCounterStyle = styled.p`
@@ -12,7 +12,7 @@ const CartCounterStyle = styled.p`
 `;
 
 const CartCounter = () => (
-  <Query query={CART_ITEMS_QUERY}>
+  <Query query={LOCAL_CART_ITEMS_QUERY}>
     {data => {
       const { cartItems } = data.data;
       return cartItems.length <= 0 ? null : (
