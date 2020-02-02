@@ -81,19 +81,6 @@ function createClient({ headers }) {
             cache.writeData({ query: LOCAL_CART_ITEMS_QUERY, data });
           }
         }
-        // Query: {
-        //   //await query items to be returned
-        //   cartItems(_, variables, { cache }) {
-        //     return cache.readQuery({
-        //       query: LOCAL_CART_ITEMS_QUERY
-        //     });
-        //   },
-        //   cartOpen(_, variables, { cache }) {
-        //     return cache.readQuery({
-        //       query: LOCAL_STATE_QUERY
-        //     });
-        //   }
-        // }
       },
       defaults: {
         cartOpen: true,
