@@ -9,12 +9,20 @@ const ADD_TO_CART_MUTATION = gql`
     $title: String!
     $price: Int!
     $image: String!
+    $quantity: int
   ) {
-    addToCart(id: $id, title: $title, price: $price, image: $image) @client {
+    addToCart(
+      id: $id
+      title: $title
+      price: $price
+      image: $image
+      quantity: $quantity
+    ) @client {
       id
       title
       price
       image
+      quantity
     }
   }
 `;
@@ -25,8 +33,7 @@ class AddToCart extends Component {
     return (
       <Mutation
         mutation={ADD_TO_CART_MUTATION}
-        variables={{ id, title, price, image }}
-      >
+        variables={{ id, title, price, image }}>
         {addToCart => <button onClick={addToCart}>Add To Cart</button>}
       </Mutation>
     );
