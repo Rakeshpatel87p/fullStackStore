@@ -71,9 +71,9 @@ const Cart = () => (
             </p>
           </header>
           <ul>
-            {cartItems.map(item => {
-              return <CartItem key={item.id} {...item} />;
-            })}
+            {cartItems.map(item => (
+              <CartItem key={item.id} {...item} />
+            ))}
           </ul>
           <footer>
             <p>
