@@ -21,6 +21,7 @@ const LOCAL_CART_ITEMS_QUERY = gql`
     cartItems @client {
       id
       title
+      price
       image
       quantity
     }
@@ -77,7 +78,7 @@ const Cart = () => (
           <footer>
             <p>
               {formatMoney(
-                cartItemsQuery.data.cartItems.reduce(
+                cartItems.reduce(
                   (accummulator, currentVal) =>
                     accummulator + currentVal.price * currentVal.quantity,
                   0
