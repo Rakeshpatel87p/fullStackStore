@@ -60,10 +60,10 @@ const Cart = () => (
             <p>
               You Have{" "}
               {cartItems.length > 0
-                ? cartItems.reduce((accum, currentVal) => {
-                    console.log(currentVal);
-                    return accum + currentVal.quantity;
-                  }, 0)
+                ? cartItems.reduce(
+                    (accum, currentVal) => accum + currentVal.quantity,
+                    0
+                  )
                 : 0}{" "}
               Item
               {cartItems ? "s" : null} in your cart.
