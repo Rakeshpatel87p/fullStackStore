@@ -10,7 +10,12 @@ type Mutation {
     image: String
     largeImage: String
   ): Item!
-  updateItem(id: ID!, title: String, description: String, price: Int): Item!
+  updateItem(
+    id: ID!
+    title: String
+    description: String
+    price: Int
+  ): Item!
   deleteItem(id: ID!): Item
 }
 
@@ -22,5 +27,7 @@ type Query {
     first: Int
   ): [Item]!
   item(where: ItemWhereUniqueInput!): Item
-  itemsConnection(where: ItemWhereInput): ItemConnection!
+  itemsConnection(
+    where: ItemWhereInput
+  ): ItemConnection!
 }
