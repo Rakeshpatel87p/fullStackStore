@@ -39,20 +39,30 @@ class Items extends Component {
         <Query
           query={ALL_ITEMS_QUERY}
           variables={{
-            skip: this.props.page * perPage - perPage
+            skip:
+              this.props.page * perPage - perPage,
           }}>
           {({ data, error, loading }) => {
             if (loading) return <p>Loading...</p>;
-            if (error) return <p>Error: {error.message}</p>;
-            return (
-              <div>
-                <ItemsList>
-                  {data.items.map(item => (
-                    <Item item={item} key={item.id} />
-                  ))}
-                </ItemsList>
-              </div>
-            );
+            if (error) {
+              return (
+                <p>Error: {error.message}</p>
+              );
+            }
+            if (data.items.length > 0) {
+              return (
+                <div>
+                  <ItemsList>
+                    {data.items.map(item => (
+                      <Item
+                        item={item}
+                        key={item.id}
+                      />
+                    ))}
+                  </ItemsList>
+                </div>
+              );
+            }
           }}
         </Query>
         <Pagination page={this.props.page} />
