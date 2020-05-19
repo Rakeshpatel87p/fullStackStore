@@ -1,18 +1,26 @@
 import withApollo from "next-with-apollo";
 import ApolloClient from "apollo-boost";
-import { endpoint } from "../config";
-import { LOCAL_STATE_QUERY } from "../components/Cart";
-import { LOCAL_CART_ITEMS_QUERY } from "../components/Cart";
+import {
+  endpoint,
+  prodEndpoint,
+} from "../config";
+import {
+  LOCAL_STATE_QUERY,
+  LOCAL_CART_ITEMS_QUERY,
+} from "../components/Cart";
 
 function createClient({ headers }) {
   return new ApolloClient({
-    uri: process.env.NODE_ENV === "development" ? endpoint : endpoint,
+    uri:
+      process.env.NODE_ENV === "development"
+        ? endpoint
+        : prodEndpoint,
     request: operation => {
       operation.setContext({
         fetchOptions: {
-          credentials: "include"
+          credentials: "include",
         },
-        headers
+        headers,
       });
     },
     // local data
@@ -22,32 +30,42 @@ function createClient({ headers }) {
           toggleCart(_, variables, { cache }) {
             // read the cartOpen value from the cache
             const { cartOpen } = cache.readQuery({
-              query: LOCAL_STATE_QUERY
+              query: LOCAL_STATE_QUERY,
             });
             // Write the cart State to the opposite
             const data = {
-              data: { cartOpen: !cartOpen }
+              data: { cartOpen: !cartOpen },
             };
             cache.writeData(data);
             return data;
           },
-          addToCart(_, { id, title, price, image }, { cache }) {
-            const { cartItems } = cache.readQuery({
-              query: LOCAL_CART_ITEMS_QUERY
-            });
+          addToCart(
+            _,
+            { id, title, price, image },
+            { cache }
+          ) {
+            const { cartItems } = cache.readQuery(
+              {
+                query: LOCAL_CART_ITEMS_QUERY,
+              }
+            );
 
             let data;
 
             cartItems.find(item => item.id === id)
               ? (data = {
                   __typename: "cartItems",
-                  cartItems: cartItems.map(item => {
-                    let returnVal = { ...item };
-                    if (item.id === id) {
-                      returnVal.quantity = returnVal.quantity + 1;
+                  cartItems: cartItems.map(
+                    item => {
+                      const returnVal = {
+                        ...item,
+                      };
+                      if (item.id === id) {
+                        returnVal.quantity += 1;
+                      }
+                      return returnVal;
                     }
-                    return returnVal;
-                  })
+                  ),
                 })
               : (data = {
                   cartItems: [
@@ -58,35 +76,45 @@ function createClient({ headers }) {
                       title,
                       price,
                       image,
-                      quantity: 1
-                    }
-                  ]
+                      quantity: 1,
+                    },
+                  ],
                 });
 
-            cache.writeQuery({ query: LOCAL_CART_ITEMS_QUERY, data });
+            cache.writeQuery({
+              query: LOCAL_CART_ITEMS_QUERY,
+              data,
+            });
             return data.cartItems;
           },
           removeFromCart(_, { id }, { cache }) {
-            //read from cartItems
-            const { cartItems } = cache.readQuery({
-              query: LOCAL_CART_ITEMS_QUERY
-            });
-            //find and remove cartItem with that id
-            const updatedCartItems = cartItems.filter(item => item.id !== id);
+            // read from cartItems
+            const { cartItems } = cache.readQuery(
+              {
+                query: LOCAL_CART_ITEMS_QUERY,
+              }
+            );
+            // find and remove cartItem with that id
+            const updatedCartItems = cartItems.filter(
+              item => item.id !== id
+            );
             const data = {
               __typename: "cartItems",
-              cartItems: [...updatedCartItems]
+              cartItems: [...updatedCartItems],
             };
-            //rewrite fresh cartItems
-            cache.writeData({ query: LOCAL_CART_ITEMS_QUERY, data });
-          }
-        }
+            // rewrite fresh cartItems
+            cache.writeData({
+              query: LOCAL_CART_ITEMS_QUERY,
+              data,
+            });
+          },
+        },
       },
       defaults: {
         cartOpen: true,
-        cartItems: []
-      }
-    }
+        cartItems: [],
+      },
+    },
   });
 }
 
