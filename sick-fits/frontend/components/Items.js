@@ -8,7 +8,7 @@ import { perPage } from "../config";
 
 const ALL_ITEMS_QUERY = gql`
   query ALL_ITEMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
-    items(first: $first, skip: $skip, orderBy: createdAt_DESC) {
+    items(first: $first, skip: $skip) {
       id
       title
       price
@@ -39,25 +39,19 @@ class Items extends Component {
         <Query
           query={ALL_ITEMS_QUERY}
           variables={{
-            skip:
-              this.props.page * perPage - perPage,
+            skip: this.props.page * perPage - perPage,
           }}>
           {({ data, error, loading }) => {
             if (loading) return <p>Loading...</p>;
             if (error) {
-              return (
-                <p>Error: {error.message}</p>
-              );
+              return <p>Error: {error.message}</p>;
             }
             if (data.items.length > 0) {
               return (
                 <div>
                   <ItemsList>
                     {data.items.map(item => (
-                      <Item
-                        item={item}
-                        key={item.id}
-                      />
+                      <Item item={item} key={item.id} />
                     ))}
                   </ItemsList>
                 </div>
