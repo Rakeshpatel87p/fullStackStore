@@ -46,17 +46,15 @@ class Items extends Component {
             if (error) {
               return <p>Error: {error.message}</p>;
             }
-            if (data.items.length > 0) {
-              return (
-                <div>
-                  <ItemsList>
-                    {data.items.map(item => (
-                      <Item item={item} key={item.id} />
-                    ))}
-                  </ItemsList>
-                </div>
-              );
-            }
+            return (
+              <div>
+                <ItemsList>
+                  {data.items.map(item => (
+                    <Item item={item} key={item.id} />
+                  ))}
+                </ItemsList>
+              </div>
+            );
           }}
         </Query>
         {/* <Pagination page={this.props.page} /> */}
